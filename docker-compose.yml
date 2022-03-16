@@ -1,0 +1,76 @@
+version: "3"
+networks:
+  monitor-net:
+    driver: bridge
+
+services:
+  prometheus:
+    image: n14s/prometheus:1.0.0
+    container_name: prometheus
+    volumes:
+      - ./config/prometheus:/etc/prometheus/config/prometheus
+    command:
+      - "--config.file=/etc/prometheus/config/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--storage.tsdb.retention=200h"
+      - "--web.enable-lifecycle"
+    restart: unless-stopped
+    ports:
+      - 9090:9090
+
+    networks:
+      monitor-net:
+        aliases:
+          - "prom"
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    user: root
+    privileged: true
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+      - ./config/nodeexporter:/etc/nodeexporter/
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)"
+      - "--collector.textfile.directory=/etc/nodeexporter"
+    restart: unless-stopped
+    ports:
+      - 9100:9100
+    networks:
+      monitor-net:
+        aliases:
+          - "node-ex"
+  aas-server:
+    image: eclipsebasyx/aas-server:1.0.1
+    volumes:
+      - ./config/aas-server:/usr/share/config
+    ports:
+      - 8081:4001
+    networks:
+      monitor-net:
+        aliases:
+          - "aas-serv"
+
+  prometheus-aas-router:
+    image: n14s/prometheus-aas-router:1.0.0
+    depends_on:
+      - aas-server
+      - prometheus
+      - node-exporter
+    volumes:
+      - ./config/prometheus-aas-router:/app/config
+    networks:
+      monitor-net:
+        aliases:
+          - "router"
+
+volumes:
+  prometheus-data:
+    driver: local
