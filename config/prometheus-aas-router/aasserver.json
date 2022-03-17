@@ -38,5 +38,15 @@
     uniqueId: "Monitoring/rootFsUsage",
     endpoint: "http://aas-server:4001/aasServer/shells/de.fhg.ipa.fabos.aas.testasset/aas/",
     path: "Monitoring/rootFsUsage"
+  },
+  {
+    uniqueId: "Monitoring/dockerVersion",
+    endpoint: "http://aas-server:4001/aasServer/shells/de.fhg.ipa.fabos.aas.testasset/aas/",
+    path: "Monitoring/dockerVersion"
+  },
+  {
+    uniqueId: "Monitoring/dockerRunningContainers",
+    endpoint: "http://aas-server:4001/aasServer/shells/de.fhg.ipa.fabos.aas.testasset/aas/",
+    path: "Monitoring/dockerRunningContainers"
   }
 ]

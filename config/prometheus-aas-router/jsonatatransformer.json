@@ -16,5 +16,17 @@
     queryPath: "config/jsonata-rootfs-type.json",
     inputType: "JsonString",
     outputType: "JsonString"
+  },
+  {
+    uniqueId: "jsonata-docker-version",
+    queryPath: "config/jsonata-docker-version.json",
+    inputType: "JsonString",
+    outputType: "JsonString"
+  },
+  {
+    uniqueId: "jsonata-docker-runningcontainers",
+    queryPath: "config/jsonata-docker-runningcontainers.json",
+    inputType: "JsonString",
+    outputType: "JsonString"
   }
 ]

@@ -12,6 +12,7 @@ This Docker Compose stack includes the following services:
 
 - [Prometheus](https://github.com/prometheus/prometheus)
 - [Node-Exporter](https://github.com/prometheus/node_exporter)
+- [Cadvisor](https://github.com/google/cadvisor)
 - [AAS-Server](https://wiki.eclipse.org/BaSyx_/_Documentation_/_Components_/_AAS_Server)
 - [Prometheus-AAS-Router](https://github.com/n14s/prometheus-aas-router)
 

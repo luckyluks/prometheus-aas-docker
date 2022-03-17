@@ -38,5 +38,15 @@
     datasource: "timer1",
     transformers: ["jsonata-standard-metric"],
     datasinks: ["prometheus-8-rootfs-usage", "Monitoring/rootFsUsage"]
+  },
+  {
+    datasource: "timer1",
+    transformers: ["jsonata-docker-version"],
+    datasinks: ["prometheus-9-docker-version", "Monitoring/dockerVersion"]
+  },
+  {
+    datasource: "timer1",
+    transformers: ["jsonata-docker-runningcontainers"],
+    datasinks: ["prometheus-10-docker-runningContainers", "Monitoring/dockerRunningContainers"]
   }
 ]

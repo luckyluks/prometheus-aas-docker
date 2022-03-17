@@ -46,5 +46,17 @@
     "serverUrl": "http://prometheus",
     "serverPort": 9090,
     "query": "rootfs-usage"
+  },
+  {
+    "uniqueId": "prometheus-9-docker-version",
+    "serverUrl": "http://prometheus",
+    "serverPort": 9090,
+    "query": "docker-version"
+  },
+  {
+    "uniqueId": "prometheus-10-docker-runningContainers",
+    "serverUrl": "http://prometheus",
+    "serverPort": 9090,
+    "query": "docker-runningContainers"
   }
 ]
