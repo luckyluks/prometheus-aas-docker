@@ -1,8 +1,20 @@
 [
-	{
-		"uniqueId": "jsonataA",
-		"queryPath": "config/jsonataA.json",
-		"inputType": "JsonString",
-		"outputType": "JsonString"
-	}
+  {
+    uniqueId: "jsonata-standard-metric",
+    queryPath: "config/jsonata-standard-metric.json",
+    inputType: "JsonString",
+    outputType: "JsonString"
+  },
+  {
+    uniqueId: "jsonata-cpu-arch",
+    queryPath: "config/jsonata-cpu-arch.json",
+    inputType: "JsonString",
+    outputType: "JsonString"
+  },
+  {
+    uniqueId: "jsonata-rootfs-type",
+    queryPath: "config/jsonata-rootfs-type.json",
+    inputType: "JsonString",
+    outputType: "JsonString"
+  }
 ]
