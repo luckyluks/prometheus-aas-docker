@@ -1,0 +1,8 @@
+[
+  {
+    "uniqueId": "prometheus1",
+    "serverUrl": "http://prometheus",
+    "serverPort": 9090,
+    "query": "ram-usage"
+  }
+]

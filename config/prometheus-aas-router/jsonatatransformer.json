@@ -1,0 +1,8 @@
+[
+	{
+		"uniqueId": "jsonataA",
+		"queryPath": "config/jsonataA.json",
+		"inputType": "JsonString",
+		"outputType": "JsonString"
+	}
+]
