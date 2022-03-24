@@ -77,7 +77,7 @@ services:
           - "aas-serv"
 
   prometheus-aas-router:
-    image: n14s/prometheus-aas-router:1.0.0
+    image: n14s/prometheus-aas-router:1.0.1
     depends_on:
       - aas-server
       - prometheus
@@ -85,6 +85,8 @@ services:
     volumes:
       - ./config/prometheus-aas-router:/app/config
     restart: unless-stopped
+    environment:
+      - PROMETHEUS_HOST=prometheus
     networks:
       monitor-net:
         aliases:
