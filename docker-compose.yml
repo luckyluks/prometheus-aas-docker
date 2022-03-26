@@ -85,12 +85,15 @@ services:
     volumes:
       - ./config/prometheus-aas-router:/app/config
     restart: unless-stopped
-    environment:
-      - PROMETHEUS_HOST=prometheus
     networks:
       monitor-net:
         aliases:
           - "router"
+    environment:
+      - PROMETHEUS_HOST=prometheus
+      - PROMETHEUS_PORT=9090
+      - AAS_SERVER_HOST=aas-server
+      - AAS_SERVER_PORT=4001
 
 volumes:
   prometheus-data:
