@@ -1,0 +1,3 @@
+[submodule "router"]
+	path = build/router
+	url = https://github.com/n14s/prometheus-aas-router
