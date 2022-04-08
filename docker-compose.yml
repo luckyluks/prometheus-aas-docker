@@ -65,12 +65,13 @@ services:
           - "cadvis"
 
   # aas-server:
+  #   container_name: aas-server
   #   image: eclipsebasyx/aas-server:1.0.1
   #   volumes:
   #     - ./config/aas-server:/usr/share/config
   #   restart: unless-stopped
   #   ports:
-  #     - 8081:4001
+  #     - 4001:4001
   #   networks:
   #     monitor-net:
   #       aliases:
@@ -78,7 +79,7 @@ services:
 
   prometheus-aas-router:
     # image: n14s/prometheus-aas-router:1.0.1
-    container_name: aas-server
+    container_name: router
     build:
       context: ./build/router
       dockerfile: Dockerfile
@@ -99,6 +100,11 @@ services:
       - PROMETHEUS_PORT=9090
       - AAS_SERVER_HOST=localhost
       - AAS_SERVER_PORT=4001
+      - REGISTRY_URL=http://registry:4000/registry
+      - SERVER_URL=http://localhost:4001/aasServer
+      - UPDATER_CONFIG_DIR=./config
+      - AASX_PATH=/usr/share/config/minimalAASs.aasx
+      - ASSET_ID=78a86e40-2858-4e6b-9e76-afcfc0240305
     ports:
       # - 4000:4000
       - 4001:4001
