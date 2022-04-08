@@ -103,7 +103,7 @@ services:
       - REGISTRY_URL=http://registry:4000/registry
       - SERVER_URL=http://localhost:4001/aasServer
       - UPDATER_CONFIG_DIR=./config
-      - AASX_PATH=/usr/share/config/minimalAASs.aasx
+      - AASX_PATH=/usr/share/config/minimalAAS.aasx
       - ASSET_ID=78a86e40-2858-4e6b-9e76-afcfc0240305
     ports:
       # - 4000:4000
