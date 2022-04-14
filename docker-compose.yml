@@ -102,6 +102,7 @@ services:
       - AAS_SERVER_PORT=4001
       - REGISTRY_URL=http://registry:4000/registry
       - SERVER_URL=http://localhost:4001/aasServer
+      - HOSTPATH_URL=http://localhost:4001/aasServer/shells
       - UPDATER_CONFIG_DIR=./config
       - AASX_PATH=/usr/share/config/minimalAAS.aasx
       - ASSET_ID=78a86e40-2858-4e6b-9e76-afcfc0240305
@@ -109,15 +110,15 @@ services:
       # - 4000:4000
       - 4001:4001
 
-  registry:
-    container_name: registry
-    image: eclipsebasyx/aas-registry:1.0.4
-    ports:
-      - 4000:4000
-    networks:
-      monitor-net:
-        aliases:
-          - "registry"
+  # registry:
+  #   container_name: registry
+  #   image: eclipsebasyx/aas-registry:1.0.4
+  #   ports:
+  #     - 4000:4000
+    # networks:
+    #   monitor-net:
+    #     aliases:
+          # - "registry"
 
 volumes:
   prometheus-data:
