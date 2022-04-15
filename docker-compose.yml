@@ -53,9 +53,9 @@ services:
       context: ./build/router
       dockerfile: Dockerfile
     depends_on:
-      - aas-server
       - prometheus
       - node-exporter
+      - cadvisor
     volumes:
       - ./config/prometheus-aas-router:/app/config
       - ./config/aas-server:/usr/share/config
