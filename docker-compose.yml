@@ -1,28 +1,19 @@
 version: "3"
-networks:
-  monitor-net:
-    driver: bridge
-
 services:
   prometheus:
-    image: n14s/prometheus:1.0.0
+    image: prom/prometheus:latest
     container_name: prometheus
-    volumes:
-      - ./config/prometheus:/etc/prometheus/config/prometheus
-    command:
-      - "--config.file=/etc/prometheus/config/prometheus/prometheus.yml"
-      - "--storage.tsdb.path=/prometheus"
-      - "--web.console.libraries=/etc/prometheus/console_libraries"
-      - "--web.console.templates=/etc/prometheus/consoles"
-      - "--storage.tsdb.retention=200h"
-      - "--web.enable-lifecycle"
-    restart: unless-stopped
     ports:
       - 9090:9090
-    networks:
-      monitor-net:
-        aliases:
-          - "prom"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./config/prometheus/:/etc/prometheus/
+      - prometheus-data:/prometheus
+    restart: unless-stopped
+    depends_on:
+      - cadvisor
+      - node-exporter
 
   node-exporter:
     image: prom/node-exporter:latest
@@ -42,13 +33,9 @@ services:
     restart: unless-stopped
     ports:
       - 9100:9100
-    networks:
-      monitor-net:
-        aliases:
-          - "node-ex"
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.44.0
+    image: gcr.io/cadvisor/cadvisor:v0.38.6
     container_name: cadvisor
     ports:
       - 8080:8080
@@ -59,26 +46,8 @@ services:
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
-    networks:
-      monitor-net:
-        aliases:
-          - "cadvis"
-
-  # aas-server:
-  #   container_name: aas-server
-  #   image: eclipsebasyx/aas-server:1.0.1
-  #   volumes:
-  #     - ./config/aas-server:/usr/share/config
-  #   restart: unless-stopped
-  #   ports:
-  #     - 4001:4001
-  #   networks:
-  #     monitor-net:
-  #       aliases:
-  #         - "aas-serv"
 
   prometheus-aas-router:
-    # image: n14s/prometheus-aas-router:1.0.1
     container_name: router
     build:
       context: ./build/router
@@ -91,23 +60,18 @@ services:
       - ./config/prometheus-aas-router:/app/config
       - ./config/aas-server:/usr/share/config
     restart: unless-stopped
-    networks:
-      monitor-net:
-        aliases:
-          - "router"
     environment:
       - PROMETHEUS_HOST=prometheus
       - PROMETHEUS_PORT=9090
       - AAS_SERVER_HOST=localhost
       - AAS_SERVER_PORT=4001
-      - REGISTRY_URL=http://registry:4000/registry
+      - REGISTRY_URL=http://${REGISTRY_HOST_FQDN}:4000/registry
       - SERVER_URL=http://localhost:4001/aasServer
-      - HOSTPATH_URL=http://localhost:4001/aasServer/shells
+      - HOSTPATH_URL=http://${HOSTNAME_FQDN}:4001/aasServer/shells  
       - UPDATER_CONFIG_DIR=./config
       - AASX_PATH=/usr/share/config/minimalAAS.aasx
-      - ASSET_ID=78a86e40-2858-4e6b-9e76-afcfc0240305
+      - ASSET_ID=${ASSET_ID}
     ports:
-      # - 4000:4000
       - 4001:4001
 
   # registry:

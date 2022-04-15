@@ -3,21 +3,19 @@ global:
   evaluation_interval: 5s
 
 rule_files:
-  - "rules/*.yml"
+  # - "rules/*.yml"
 
 scrape_configs:
   - job_name: "prometheus"
     static_configs:
-      - targets:
-          - prom:9094
+      - targets: ["localhost:9090"]
   - job_name: "node"
     static_configs:
-      - targets: ["node-ex:9100"]
+      - targets: ["node-exporter:9100"]
   - job_name: "cadvisor"
     scrape_interval: 5s
     static_configs:
-      - targets:
-          - cadvis:8080
-    file_sd_configs:
-      - files:
-          - "targets/*.yml"
+      - targets: ["cadvisor:8080"]
+    # file_sd_configs:
+    #   - files:
+    #       - "targets/*.yml"
