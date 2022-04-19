@@ -13,14 +13,45 @@ This Docker Compose stack includes the following services:
 - [Prometheus](https://github.com/prometheus/prometheus)
 - [Node-Exporter](https://github.com/prometheus/node_exporter)
 - [Cadvisor](https://github.com/google/cadvisor)
-- [AAS-Server](https://wiki.eclipse.org/BaSyx_/_Documentation_/_Components_/_AAS_Server)
-- [Prometheus-AAS-Router](https://github.com/n14s/prometheus-aas-router)
+- [Prometheus-AAS-Router](https://github.com/luckyluks/prometheus-aas-router)
 
-Note: The prometheus image is slighty altered, only preparing its filesystem for a clean bind mount of its config files. The image is hosted on Docker Hub, its Dockerfiles can be inspected in the build directory.
+## Setup
 
-To start the stack, simply run  
-`docker-compose up`
+1. pull the repo and include the submodules
+    ```console
+    git clone --recurse-submodules https://github.com/luckyluks/prometheus-aas-docker.git
+    ```
 
+2. change in repo
+    ```console
+    cd prometheus-aas-docker/
+    ```
+
+3. adapt the ``.env`` file
+    ```console
+    nano .env
+    ```
+    Things to change:
+    - REGISTRY_HOST_FQDN: the fqdn of the registry host
+    - HOSTNAME_FQDN: the fqdn hostname of the host you want to start the stack
+    - ASSET_ID: arbitrary ID (e.g. UUID) which is used to identify the host in the registry
+
+4. pull the repo and include the submodules
+    ```console
+    docker-compose up -d --build
+    ```
+5. check if node is registered, e.g. with: 
+    ```
+    source .env && curl -q http://$REGISTRY_HOST_FQDN:4000/registry/api/v1/registry | grep $ASSET_ID
+    ```
+
+
+## Take down gracefully
+
+in order to take down the stack and deregister AAS at registery, use:
+```console
+docker-compose down -v
+```
 ## Configuration
 
 The config dir contains folders with config files of the individual services.  
