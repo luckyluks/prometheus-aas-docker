@@ -32,8 +32,8 @@ This Docker Compose stack includes the following services:
     nano .env
     ```
     Things to change:
-    - REGISTRY_HOST_FQDN: the fqdn of the registry host
-    - HOSTNAME_FQDN: the fqdn hostname of the host you want to start the stack
+    - REGISTRY_HOST_FQDN: the fqdn of the registry host. For local development you can use a [local registry (see below)](#local-registry)
+    - HOSTNAME_FQDN: the fqdn hostname of the host you want to start the stack. For local development you can use `localhost`
     - ASSET_ID: arbitrary ID (e.g. UUID) which is used to identify the host in the registry
 
 4. pull the repo and include the submodules
@@ -58,3 +58,17 @@ The config dir contains folders with config files of the individual services.
 Those config-folders are mounted onto the container.  
 The config files in this repo contain a example setup, pushing elemental device metrics into the AAS.  
 Further information on how to configure the individual services can be found on their respective websites.
+
+
+## Local registry
+
+In order to register the provided AAS in a registry, a local version can be brought up with
+```console
+docker-compose -f registry.yml up -d
+```
+In this case the environment variable `REGISTRY_HOST_FQDN` and `HOSTNAME_FQDN` can be assigned as following in the `.env` file: 
+```console
+REGISTRY_HOST_FQDN=host.docker.internal
+HOSTNAME_FQDN=localhost
+ASSET_ID=someRandomId
+```

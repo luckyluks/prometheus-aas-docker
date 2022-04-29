@@ -1,0 +1,7 @@
+version: "3"
+services:
+  registry:
+    container_name: registry_local
+    image: eclipsebasyx/aas-registry:1.0.4
+    ports:
+      - 4000:4000
