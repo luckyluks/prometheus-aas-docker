@@ -41,7 +41,7 @@ This Docker Compose stack includes the following services:
     docker-compose up -d --build
     ```
 5. check if node is registered, e.g. with: 
-    ```
+    ```console
     source .env && curl -q http://$REGISTRY_HOST_FQDN:4000/registry/api/v1/registry | grep $ASSET_ID
     ```
 
